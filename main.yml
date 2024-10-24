@@ -1,0 +1,42 @@
+---
+- name: Install Jenkins CI on RHEL
+  hosts: localhost
+  become: true
+
+  vars:
+    jenkins_repo_url: http://pkg.jenkins.io/redhat-stable/jenkins.repo
+    jenkins_repo_key: https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+
+  tasks:
+    - name: Install required packages
+      ansible.builtin.dnf:
+        name:
+          - java-11-openjdk
+          - wget
+          - git
+        state: present
+
+    - name: Add Jenkins repository
+      ansible.builtin.get_url:
+        url: "{{ jenkins_repo_url }}"
+        dest: /etc/yum.repos.d/jenkins.repo
+
+    - name: Import Jenkins repository key
+      ansible.buildin.rpm_key:
+        state: present
+        key: "{{ jenkins_repo_key }}"
+
+    - name: Install Jenkins
+      ansible.buildin.dnf:
+        name: jenkins
+        state: present
+
+    - name: Start and enable Jenkins service
+      ansible.buildin.systemd:
+        name: jenkins
+        enabled: yes
+        state: started
+
+    - name: Print Jenkins initial admin password location
+      ansible.buildin.debug:
+        msg: "Jenkins is installed. Access it at http://<your_server_ip>:8080. You can find the initial admin password in /var/lib/jenkins/secrets/initialAdminPassword"
