@@ -1,0 +1,8 @@
+[provisioners]
+10.242.0.11
+
+
+
+[provisioners:vars]
+ansible_user=root
+ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -q core@"150.240.70.123'
