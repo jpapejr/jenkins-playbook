@@ -22,21 +22,21 @@
         dest: /etc/yum.repos.d/jenkins.repo
 
     - name: Import Jenkins repository key
-      ansible.buildin.rpm_key:
+      ansible.builtin.rpm_key:
         state: present
         key: "{{ jenkins_repo_key }}"
 
     - name: Install Jenkins
-      ansible.buildin.dnf:
+      ansible.builtin.dnf:
         name: jenkins
         state: present
 
     - name: Start and enable Jenkins service
-      ansible.buildin.systemd:
+      ansible.builtin.systemd:
         name: jenkins
-        enabled: yes
+        enabled: true
         state: started
 
     - name: Print Jenkins initial admin password location
-      ansible.buildin.debug:
+      ansible.builtin.debug:
         msg: "Jenkins is installed. Access it at http://<your_server_ip>:8080. You can find the initial admin password in /var/lib/jenkins/secrets/initialAdminPassword"
