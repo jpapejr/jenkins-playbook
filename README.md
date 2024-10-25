@@ -5,7 +5,7 @@ I need to deploy Jenkins on a remote RHEL host that sits on a private network be
 in this repo will deploy everything needed to get Jenkins working. Customizes it to your specific needs as you like. 
 
 The image below depicts the network topology addressed with this solution: 
-
+![diagram](https://github.com/jpapejr/jenkins-playbook/blob/main/playbook-diagram.drawio.png?raw=true)
 
 ## To run
 `ansible-playbook -i inventory.txt main.yaml` from your laptop
